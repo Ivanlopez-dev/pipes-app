@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { AsyncPipe, I18nPluralPipe, I18nSelectPipe, JsonPipe, KeyValuePipe, SlicePipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
 
 import { CardComponent } from "../../components/card/card.component";
+import { interval, map, tap } from 'rxjs';
 
 const client1 = {
   name: 'Iván',
@@ -79,4 +80,10 @@ export default class UncommonPageComponent {
       console.log('Promesa finalizada');
     }, 3500);
   });
+
+  // Async Pipe with Observable
+  myObservableTimer = interval(2000).pipe(
+    map((value) => value + 1),
+    tap((value) => console.log('tap:', value))
+  );
 }
