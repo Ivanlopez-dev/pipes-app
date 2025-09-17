@@ -1,11 +1,15 @@
 import { ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
+
 import localeEs from '@angular/common/locales/es'
+import localeFr from '@angular/common/locales/fr'
 
 import { routes } from './app.routes';
+import { LocaleService } from './services/locale.service';
 
 registerLocaleData(localeEs, 'es');
+registerLocaleData(localeFr, 'fr');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,7 +19,9 @@ export const appConfig: ApplicationConfig = {
 
     {
       provide: LOCALE_ID,
-      useValue: 'es',
+      // useValue: 'fr',
+      deps: [LocaleService],
+      useFactory: (localeService: LocaleService) => localeService.getLocale,
     }
   ]
 };
